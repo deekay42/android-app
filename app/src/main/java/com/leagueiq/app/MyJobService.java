@@ -1,4 +1,4 @@
-package com.google.firebase.quickstart.fcm;
+package com.leagueiq.app;
 
 import android.util.Log;
 

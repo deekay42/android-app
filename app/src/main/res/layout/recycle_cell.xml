@@ -1,0 +1,52 @@
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraintLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#131313"
+    tools:context="com.google.firebase.quickstart.fcm.com.leagueiq.app.MainActivity"
+    >
+
+    <ImageView
+        android:id="@+id/itemImg"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="100dp"
+        android:layout_marginLeft="100dp"
+        android:cropToPadding="true"
+        android:padding="2dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/item_12" />
+
+    <TextView
+        android:id="@+id/downArrow"
+        android:layout_width="50dp"
+        android:layout_height="20dp"
+        android:gravity="center"
+        android:text="V"
+        android:textColor="?attr/colorButtonNormal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/itemImg"
+        app:layout_constraintStart_toStartOf="@+id/itemImg"
+        app:layout_constraintTop_toBottomOf="@+id/itemImg" />
+
+
+    <TextView
+        android:id="@+id/itemName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:gravity="start"
+        android:textColor="@android:color/white"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@id/itemImg"
+        app:layout_constraintStart_toEndOf="@+id/itemImg"
+        app:layout_constraintTop_toTopOf="@id/itemImg"
+        android:text="ITEM"
+        />
+
+</android.support.constraint.ConstraintLayout>

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.firebase.quickstart.fcm;
+package com.leagueiq.app;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -25,7 +25,6 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
-import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.firebase.jobdispatcher.FirebaseJobDispatcher;
@@ -33,11 +32,9 @@ import com.firebase.jobdispatcher.GooglePlayDriver;
 import com.firebase.jobdispatcher.Job;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+import com.leagueiq.app.R;
 
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.io.InputStream;
+import java.util.Map;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
@@ -65,16 +62,17 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         // Not getting messages here? See why this may be: https://goo.gl/39bRNJ
         Log.d(TAG, "From: " + remoteMessage.getFrom());
 
+        Map<String, String> payload = remoteMessage.getData();
         // Check if message contains a data payload.
-        if (remoteMessage.getData().size() > 0) {
-            Log.d(TAG, "Message data payload: " + remoteMessage.getData());
+        if (payload.size() > 0) {
+            Log.d(TAG, "Message data payload: " + payload);
 
-            if (/* Check if data needs to be processed by long running job */ true) {
+            if (/* Check if data needs to be processed by long running job */ false) {
                 // For long-running tasks (10 seconds or more) use Firebase Job Dispatcher.
                 scheduleJob();
             } else {
                 // Handle message within 10 seconds
-                handleNow();
+                handleNow(payload.get("body"));
             }
 
         }
@@ -83,8 +81,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         if (remoteMessage.getNotification() != null) {
             Log.d(TAG, "Message Title: " + remoteMessage.getNotification().getTitle());
             Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
-            String item_int = remoteMessage.getNotification().getBody();
-            sendToActivity(item_int);
         }
 
         // Also if you intend on generating your own notifications as a result of a received FCM
@@ -92,11 +88,11 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     }
     // [END receive_message]
 
-    void sendToActivity(String item_int) {
+    void sendToActivity(String items) {
 
-        Log.d("BroadcastService", "Sending message to activity: " + item_int);
-        final Intent intent = new Intent("NEW_ITEM");
-        intent.putExtra("item_int", item_int);
+        Log.d("BroadcastService", "Sending message to activity: " + items);
+        final Intent intent = new Intent("NEW_ITEMS");
+        intent.putExtra("items", items);
         sendBroadcast(intent);
 
     }
@@ -135,7 +131,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     /**
      * Handle time allotted to BroadcastReceivers.
      */
-    private void handleNow() {
+    private void handleNow(String items) {
+        sendToActivity(items);
         Log.d(TAG, "Short lived task is done.");
     }
 
